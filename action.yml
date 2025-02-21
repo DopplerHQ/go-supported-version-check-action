@@ -1,0 +1,23 @@
+name: Go Supported Version Check
+description: Checks whether the provided Go version is still receiving updates
+author: Doppler
+
+branding:
+  icon: download
+  color: blue
+
+inputs:
+  go-version:
+    description: The Go version being checked
+    required: true
+  version-requirement:
+    description: >-
+      The rule determining the version being checked is allowed
+      - "any-supported" (default): Any minor version of a supported major version
+      - "any-latest-supported": Only the latest minor versions of a supported major version
+      - "latest-supported": Only the latest released version
+    default: any-supported
+
+runs:
+  using: node20
+  main: index.js

@@ -1,0 +1,15 @@
+{
+  "name": "go-supported-version-check-action",
+  "version": "1.0.0",
+  "description": "Ensure Go version stays on supported versions",
+  "license": "Apache-2.0",
+  "author": "Doppler",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@actions/core": "^1.11.1"
+  }
+}

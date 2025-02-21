@@ -1,0 +1,110 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  test-stable-go-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Stable Go
+        id: install-stable-go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+      - name: Go Supported Version (any-supported)
+        uses: ./
+        with:
+          go-version: ${{steps.install-stable-go.outputs.go-version}}
+          version-requirement: any-supported
+      - name: Go Supported Version (any-latest-supported)
+        uses: ./
+        with:
+          go-version: ${{steps.install-stable-go.outputs.go-version}}
+          version-requirement: any-latest-supported
+      - name: Go Supported Version (latest-supported)
+        uses: ./
+        with:
+          go-version: ${{steps.install-stable-go.outputs.go-version}}
+          version-requirement: latest-supported
+  test-oldstable-go-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Old-Stable Go
+        id: install-oldstable-go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 'oldstable'
+      - name: Go Supported Version (any-supported)
+        uses: ./
+        with:
+          go-version: ${{steps.install-oldstable-go.outputs.go-version}}
+          version-requirement: any-supported
+      - name: Go Supported Version (any-latest-supported)
+        uses: ./
+        with:
+          go-version: ${{steps.install-oldstable-go.outputs.go-version}}
+          version-requirement: any-latest-supported
+      - name: Go Supported Version (latest-supported)
+        id: go-supported-version-oldstable
+        continue-on-error: true
+        uses: ./
+        with:
+          go-version: ${{steps.install-oldstable-go.outputs.go-version}}
+          version-requirement: latest-supported
+      - name: Invert result
+        if: always()
+        run: |
+          if [ "${{ steps.go-supported-version-oldstable.outcome }}" == "success" ]; then
+            echo "The 'Go Supported Version' check unexpectedly succeeded."
+            exit 1
+          else
+            echo "The 'Go Supported Version' check failed as expected."
+            exit 0
+          fi
+  test-static-old-go-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Go Supported Version (any-supported)
+        id: go-supported-version-static-any
+        continue-on-error: true
+        uses: ./
+        with:
+          go-version: 1.21.13
+          version-requirement: any-supported
+      - name: Go Supported Version (any-latest-supported)
+        id: go-supported-version-static-any-latest
+        continue-on-error: true
+        uses: ./
+        with:
+          go-version: 1.21.13
+          version-requirement: any-latest-supported
+      - name: Go Supported Version (latest-supported)
+        id: go-supported-version-static-latest
+        continue-on-error: true
+        uses: ./
+        with:
+          go-version: 1.21.13
+          version-requirement: latest-supported
+      - name: Invert result
+        if: always()
+        run: |
+          if [ "${{ steps.go-supported-version-static-any.outcome }}" == "success" ] ||
+            [ "${{ steps.go-supported-version-static-any-latest.outcome }}" == "success" ] ||
+            [ "${{ steps.go-supported-version-static-latest.outcome }}" == "success" ]; then
+            echo "The 'Go Supported Version' check unexpectedly succeeded."
+            exit 1
+          else
+            echo "The 'Go Supported Version' check failed as expected."
+            exit 0
+          fi

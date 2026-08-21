@@ -17,7 +17,7 @@ Include this Action as a step in your workflow:
 
 ```yaml
 - Go Supported Version
-  uses: dopplerhq/go-supported-version-check-action@v1
+  uses: dopplerhq/go-supported-version-check-action@v2
   with:
     go-version: <your-Go-version>
     version-requirement: any-supported
@@ -78,7 +78,7 @@ jobs:
 
     steps:
       - name: Go Supported Version
-        uses: dopplerhq/go-supported-version-check-action@v1
+        uses: dopplerhq/go-supported-version-check-action@v2
         with:
           go-version: 1.23.1
           version-requirement: any-supported

@@ -1,6 +1,6 @@
 {
   "name": "go-supported-version-check-action",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "description": "Ensure Go version stays on supported versions",
   "license": "Apache-2.0",

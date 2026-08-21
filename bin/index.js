@@ -16238,7 +16238,7 @@ function error(message, properties = {}) {
 }
 //#endregion
 //#region src/meta.js
-const VERSION = "1.0.0";
+const VERSION = "2.0.0";
 //#endregion
 //#region src/go-versions.js
 const RECOGNIZED_VERSION_REQUIREMENTS = [

@@ -1,15 +1,20 @@
 {
   "name": "go-supported-version-check-action",
-  "version": "1.0.0",
+  "version": "2.0.0",
+  "private": true,
   "description": "Ensure Go version stays on supported versions",
   "license": "Apache-2.0",
   "author": "Doppler",
   "type": "module",
-  "main": "index.js",
+  "main": "bin/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rolldown --config rolldown.config.ts"
   },
   "dependencies": {
-    "@actions/core": "^1.11.1"
-  }
+    "@actions/core": "^3.0.1"
+  },
+  "devDependencies": {
+    "rolldown": "^1.2.5"
+  },
+  "packageManager": "pnpm@11.22.0"
 }
